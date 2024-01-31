@@ -1,39 +1,37 @@
-function beolvasSzam() {
-    var szamErtek = document.getElementById('szam').value;
+var szamok = []; // Tárolja a hozzáadott számokat
 
-    if (!isNaN(szamErtek)) {
-      var listaElem = document.createElement('li');
-      listaElem.textContent = szamErtek;
+    function beolvasSzam() {
+      var szamErtek = document.getElementById('szam').value;
 
-      var lista = document.getElementById('szamokLista');
+      if (!isNaN(szamErtek)) {
+        var listaElem = document.createElement('li');
+        listaElem.textContent = szamErtek;
 
-      if (!document.getElementById('szamLista')) {
-        var szamLista = document.createElement('ul');
-        szamLista.setAttribute('id', 'szamLista');
-        document.body.appendChild(szamLista);
-      }
+        var lista = document.getElementById('szamokLista');
 
-      document.getElementById('szamLista').appendChild(listaElem);
-      document.getElementById('szam').value = '';
-    } else {
-      alert('Érvénytelen szám!');
-    }
-  }
+        if (!document.getElementById('szamLista')) {
+          var szamLista = document.createElement('ul');
+          szamLista.setAttribute('id', 'szamLista');
+          document.body.appendChild(szamLista);
+        }
 
-  function megtalalLegkisebb() {
-    var listaElemek = document.getElementById('szamLista').getElementsByTagName('li');
-    var legkisebb = Infinity;
+        document.getElementById('szamLista').appendChild(listaElem);
+        document.getElementById('szam').value = '';
 
-    for (var i = 0; i < listaElemek.length; i++) {
-      var szam = parseFloat(listaElemek[i].textContent);
-      if (!isNaN(szam) && szam < legkisebb) {
-        legkisebb = szam;
+        // Hozzáadja a számot a tárolóhoz
+        szamok.push(parseFloat(szamErtek));
+      } else {
+        alert('Érvénytelen szám!');
       }
     }
 
-    if (legkisebb !== Infinity) {
-      document.getElementById('legkisebbSzam').textContent = 'Legkisebb szám: ' + legkisebb;
-    } else {
-      document.getElementById('legkisebbSzam').textContent = 'Nincs megadott szám a listában.';
+    function megkeresLegnagyobb() {
+      var maxSzamElem = document.getElementById('maxSzam');
+
+      if (szamok.length > 0) {
+        var maxSzam = Math.max(...szamok);
+        maxSzamElem.textContent = 'Maximum szám: ' + maxSzam;
+      } else {
+        maxSzamElem.textContent = 'Nincs még hozzáadott szám';
+      }
     }
-  }
